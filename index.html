@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rizki@portfolio: ~</title>
+
+    <!-- Google Fonts: Press Start 2P (pixel display font) + VT323 (terminal body font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External stylesheet: see css/style.css for the full retro-terminal theme -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ====================== CRT OVERLAY LAYERS ======================
+     Purely decorative, fixed-position layers stacked above the page
+     content to simulate an old CRT monitor (scanlines, vignette,
+     flicker). Defined in style.css, section 3. Non-interactive. -->
+    <div class="crt-overlay"></div>
+    <div class="crt-vignette"></div>
+    <div class="crt-flicker"></div>
+
+    <!-- ====================== STICKY NAVIGATION ======================
+     Fixed top bar with in-page anchor links to each section below. -->
+    <nav>
+      <a href="#hero">~</a>
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </nav>
+
+    <!-- ====================== HERO SECTION ======================
+     First thing a visitor sees. Plays a typed "boot log" animation,
+     then reveals the big pixel-font name heading, tagline, and a
+     scroll-down hint. -->
+    <section id="hero">
+      <div class="inner">
+        <div class="boot-log" id="bootLog"></div>
+        <h1 class="hero-heading" id="heroHeading" style="visibility: hidden">
+          Hello, I'm Rizki Aditya<span class="cursor">&nbsp;</span>
+        </h1>
+        <p class="hero-tagline" id="heroTagline" style="visibility: hidden">
+          &gt; full-stack developer // PHP · MySQL · JavaScript
+        </p>
+        <p class="scroll-hint" id="scrollHint" style="visibility: hidden">
+          [ scroll down ]
+        </p>
+      </div>
+    </section>
+
+    <!-- ====================== ABOUT SECTION ======================
+     Short bio plus a terminal-style "spec sheet" (role / stack /
+     focus / status) framed inside a fake terminal window. -->
+    <section id="about">
+      <div class="inner term-window">
+        <div class="term-bar">
+          <span class="term-dot"></span><span class="term-dot"></span
+          ><span class="term-dot"></span>
+          <span class="term-title">about.sh</span>
+        </div>
+
+
+        <div style="padding: 2rem">
+          <p class="eyebrow prompt">cat about.txt</p>
+          <h2
+            class="pixel"
+            style="font-size: clamp(1.2rem, 3vw, 1.8rem); margin-bottom: 1rem"
+          >
+            About Me
+          </h2>
+          <p class="bio">
+            Hello my name is 
+            <h3 class="pixel-name">
+            <span style="--i:0">M</span><span style="--i:1">u</span><span style="--i:2">h</span><span style="--i:3">a</span><span style="--i:4">m</span><span style="--i:5">m</span><span style="--i:6">a</span><span style="--i:7">d</span><span style="--i:8">&nbsp;</span><span style="--i:9">R</span><span style="--i:10">i</span><span style="--i:11">z</span><span style="--i:12">k</span><span style="--i:13">i</span><span style="--i:14">&nbsp;</span><span style="--i:15">A</span><span style="--i:16">d</span><span style="--i:17">i</span><span style="--i:18">t</span><span style="--i:19">y</span><span style="--i:20">a</span>
+            </h3>
+
+            I'm a developer and student who spends most nights in a terminal
+            window, building full-stack web applications with PHP and MySQL. I
+            like taking projects from a rough idea to something that actually
+            runs in production &mdash; wiring up databases, hardening security,
+            and polishing the front end until it feels right. Somewhere between
+            coursework and side projects, I've picked up a habit of shipping
+            things end to end rather than leaving them half-built.
+          </p>
+          <dl class="about-grid" style="margin-top: 2rem">
+            <dt>role</dt>
+            <dd>Full-Stack Web Developer &amp; CS Student</dd>
+            <dt>stack</dt>
+            <dd>PHP · MySQL · JavaScript · HTML/CSS</dd>
+            <dt>focus</dt>
+            <dd>Full-stack apps, database design, secure deployments</dd>
+            <dt>status</dt>
+            <dd>
+              <span class="ok" style="color: var(--green)"
+                >● available for freelance / collab</span
+              >
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== SKILLS SECTION ======================
+     Grid of key skills, each with an animated fill bar. Bar width
+     is controlled per-item via the inline --pct custom property. -->
+    <section id="skills">
+      <div class="inner term-window">
+        <div class="term-bar">
+          <span class="term-dot"></span><span class="term-dot"></span
+          ><span class="term-dot"></span>
+          <span class="term-title">skills.sh</span>
+        </div>
+        <div style="padding: 2rem">
+          <p class="eyebrow prompt">ls -la ./skills</p>
+          <h2
+            class="pixel"
+            style="font-size: clamp(1.2rem, 3vw, 1.8rem); margin-bottom: 2rem"
+          >
+            Skills
+          </h2>
+          <ul class="skills-list">
+            <li>
+              PHP
+              <div class="bar"><span style="--pct: 92%"></span></div>
+            </li>
+            <li>
+              MySQL
+              <div class="bar"><span style="--pct: 88%"></span></div>
+            </li>
+            <li>
+              JavaScript
+              <div class="bar"><span style="--pct: 78%"></span></div>
+            </li>
+            <li>
+              HTML / CSS
+              <div class="bar"><span style="--pct: 90%"></span></div>
+            </li>
+            <li>
+              Git &amp; Deployment
+              <div class="bar"><span style="--pct: 80%"></span></div>
+            </li>
+            <li>
+              REST APIs &amp; OAuth
+              <div class="bar"><span style="--pct: 75%"></span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== PROJECTS SECTION ======================
+     3–4 card-style project entries, each with a title, short
+     description, tag line, and a "View on GitHub" link (inline SVG
+     GitHub mark). Replace the placeholder github.com/ hrefs and
+     copy with your real project details. -->
+    <section id="projects">
+      <div class="inner">
+        <p class="eyebrow prompt">ls -la ./projects</p>
+        <h2
+          class="pixel"
+          style="font-size: clamp(1.2rem, 3vw, 1.8rem); margin-bottom: 2rem"
+        >
+          Projects
+        </h2>
+        <div class="projects-grid">
+          <!-- Project card: TokoKita Shop -->
+          <div class="card">
+            <div class="card-title">TokoKita Shop</div>
+            <p class="card-desc">
+              Full-stack PHP/MySQL ferry ticketing platform with Google OAuth
+              login, a PWA service worker, WhatsApp Cloud API notifications,
+              seat-based booking, and an admin panel.
+            </p>
+            <p class="card-tags">PHP · MySQL · PWA · OAuth</p>
+            <a
+              class="gh-link"
+              href="https://github.com/"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+          0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+          1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+          0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04
+          2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65
+          3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                />
+              </svg>
+              View on GitHub
+            </a>
+          </div>
+
+          <!-- Project card: Aurelia Skin & Wellness -->
+          <div class="card">
+            <div class="card-title">Aurelia Skin &amp; Wellness</div>
+            <p class="card-desc">
+              A complete front-end redesign transforming a ferry ticketing site
+              into a clinic website &mdash; full CSS/PHP/JS overhaul across
+              multiple files while keeping the backend intact.
+            </p>
+            <p class="card-tags">PHP · CSS · JavaScript</p>
+            <a
+              class="gh-link"
+              href="https://github.com/"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+          0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+          1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+          0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04
+          2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65
+          3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                />
+              </svg>
+              View on GitHub
+            </a>
+          </div>
+
+          <!-- Project card: BowlFit -->
+          <div class="card">
+            <div class="card-title">BowlFit</div>
+            <p class="card-desc">
+              A healthy rice-bowl food concept built for an entrepreneurship
+              course &mdash; branding, business plan, and a landing page
+              pitching the idea to customers and investors.
+            </p>
+            <p class="card-tags">Business · Branding · HTML/CSS</p>
+            <a
+              class="gh-link"
+              href="https://github.com/"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+          0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+          1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+          0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04
+          2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65
+          3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                />
+              </svg>
+              View on GitHub
+            </a>
+          </div>
+
+          <!-- Project card: KBM DB System -->
+          <div class="card">
+            <div class="card-title">KBM DB System</div>
+            <p class="card-desc">
+              A relational database system for a student-orientation event,
+              covering complex queries, transactions, views, and constraints
+              built during a database practicum.
+            </p>
+            <p class="card-tags">MySQL · SQL · Database Design</p>
+            <a
+              class="gh-link"
+              href="https://github.com/"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+          0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+          1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+          0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04
+          2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65
+          3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                />
+              </svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== CONTACT SECTION ======================
+     Closing call-to-action: mailto button plus social links.
+     Swap the placeholder email/social hrefs for real ones. -->
+    <section id="contact">
+      <div class="inner contact-box">
+        <p class="eyebrow prompt" style="justify-content: center">
+          ./send_message.sh
+        </p>
+        <h2
+          class="pixel"
+          style="font-size: clamp(1.2rem, 3vw, 1.8rem); margin-bottom: 1rem"
+        >
+          Get In Touch
+        </h2>
+        <p
+          style="
+            font-size: 1.3rem;
+            max-width: 520px;
+            margin: 0 auto;
+            color: #a9e6a9;
+          "
+        >
+          Have a project, a bug, or just want to talk shop about PHP and
+          databases? My terminal is always open.
+        </p>
+        <a class="email-link" href="mailto:hello@rizki.dev"
+          >&gt; send_email()</a
+        >
+        <div class="socials">
+          <a href="https://github.com/" target="_blank" rel="noopener"
+            >github</a
+          >
+          <a href="https://linkedin.com/" target="_blank" rel="noopener"
+            >linkedin</a
+          >
+          <a href="mailto:hello@rizki.dev">email</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer>
+      <p>&copy; 2026 Rizki &mdash; built with black coffee and &lt;div&gt;s.</p>
+    </footer>
+
+    <!-- External script: types out the hero boot-log animation. See js/script.js -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
