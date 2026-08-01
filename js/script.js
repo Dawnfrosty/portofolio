@@ -54,3 +54,40 @@ typeLine(bootLines, 0, logEl, () => {
   tagline.style.visibility = 'visible';
   hint.style.visibility = 'visible';
 });
+
+/* =========================================================================
+   FEATHER ICONS
+   Renders the GitHub / LinkedIn / Email <i data-feather="..."> placeholders
+   (in the nav and the Contact section) into actual inline SVG icons. Must
+   run after the feather-icons CDN script (loaded in <head>) has parsed.
+   ========================================================================= */
+if (window.feather) {
+  feather.replace();
+}
+
+/* =========================================================================
+   MOBILE NAV — HAMBURGER TOGGLE
+   Below the 700px breakpoint the nav links + social icons collapse into
+   a dropdown (see .nav-menu / .nav-menu.open in style.css). This just
+   toggles the "open" state on click and closes the menu again when a
+   link inside it is tapped.
+   ========================================================================= */
+const navToggle = document.getElementById('navToggle');
+const navMenu   = document.getElementById('navMenu');
+
+if (navToggle && navMenu) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  // close the dropdown whenever a nav link is tapped
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
