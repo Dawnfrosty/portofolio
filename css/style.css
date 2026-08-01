@@ -11,14 +11,14 @@
    Centralized color palette so the whole theme can be retuned from one
    place. Green = primary text/glow, amber = accents/links/CTAs.
    ------------------------------------------------------------------------- */
-:root {
-  --bg: #010901; /* near-black CRT background */
-  --bg-panel: #041004; /* slightly lighter panel background for "windows" */
-  --green: #33ff33; /* primary neon text color */
+:root{
+  --bg:        #010901; /* near-black CRT background */
+  --bg-panel:  #041004; /* slightly lighter panel background for "windows" */
+  --green:     #33ff33; /* primary neon text color */
   --green-dim: #1c8f1c; /* secondary/muted green for labels, borders */
-  --green-glow: #7dff7d; /* brighter green for glowing highlights */
-  --amber: #ffcc00; /* accent color for links, CTAs, taglines */
-  --line: #114411; /* hairline border/divider color */
+  --green-glow:#7dff7d; /* brighter green for glowing highlights */
+  --amber:     #ffcc00; /* accent color for links, CTAs, taglines */
+  --line:      #114411; /* hairline border/divider color */
 }
 
 /* -------------------------------------------------------------------------
@@ -26,48 +26,29 @@
    Sets up the dark background, base font (VT323 for body text), and the
    glowing text-shadow treatment shared by all headings.
    ------------------------------------------------------------------------- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; } /* smooth in-page nav jumps */
+
+body{
+  background:var(--bg);
+  color:var(--green);
+  font-family:'VT323', monospace;
+  font-size:22px;
+  line-height:1.5;
+  overflow-x:hidden;
+  position:relative;
 }
 
-html {
-  scroll-behavior: smooth;
-} /* smooth in-page nav jumps */
+::selection{ background:var(--green); color:#000; }
 
-body {
-  background: var(--bg);
-  color: var(--green);
-  font-family: "VT323", monospace;
-  font-size: 22px;
-  line-height: 1.5;
-  overflow-x: hidden;
-  position: relative;
+h1,h2,h3,.pixel{
+  font-family:'Press Start 2P', monospace; /* pixel/bitmap display font */
+  text-shadow: 0 0 4px var(--green), 0 0 14px rgba(51,255,51,0.35);
 }
 
-::selection {
-  background: var(--green);
-  color: #000;
-}
-
-h1,
-h2,
-h3,
-.pixel {
-  font-family: "Press Start 2P", monospace; /* pixel/bitmap display font */
-  text-shadow:
-    0 0 4px var(--green),
-    0 0 14px rgba(51, 255, 51, 0.35);
-}
-
-a {
-  color: var(--amber);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
+a{ color:var(--amber); text-decoration:none; }
+a:hover{ text-decoration:underline; }
 
 /* -------------------------------------------------------------------------
    3. CRT / SCANLINE OVERLAY
@@ -75,85 +56,117 @@ a:hover {
    old CRT monitor: horizontal scanlines, a dark vignette, and a random
    flicker. All are pointer-events:none so they never block clicks.
    ------------------------------------------------------------------------- */
-.crt-overlay {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0px,
-    rgba(0, 0, 0, 0) 2px,
-    rgba(0, 0, 0, 0.18) 3px,
-    rgba(0, 0, 0, 0) 4px
-  );
-  mix-blend-mode: multiply;
+.crt-overlay{
+  pointer-events:none;
+  position:fixed; inset:0; z-index:50;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0.18) 3px,
+      rgba(0,0,0,0) 4px
+    );
+  mix-blend-mode:multiply;
 }
 
-.crt-vignette {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 51;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0, 0, 0, 0) 55%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
+.crt-vignette{
+  pointer-events:none;
+  position:fixed; inset:0; z-index:51;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
 }
 
-.crt-flicker {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 52;
-  background: rgba(51, 255, 51, 0.02);
+.crt-flicker{
+  pointer-events:none;
+  position:fixed; inset:0; z-index:52;
+  background: rgba(51,255,51,0.02);
   animation: flicker 6.5s infinite;
 }
 
-@keyframes flicker {
-  0%,
-  96%,
-  100% {
-    opacity: 0;
-  }
-  97% {
-    opacity: 1;
-  }
-  98% {
-    opacity: 0.2;
-  }
-  99% {
-    opacity: 0.6;
-  }
+@keyframes flicker{
+  0%, 96%, 100% { opacity:0; }
+  97% { opacity:1; }
+  98% { opacity:0.2; }
+  99% { opacity:0.6; }
 }
 
 /* -------------------------------------------------------------------------
    4. STICKY NAV
-   Fixed top navigation bar with in-page anchor links to each section.
+   Fixed top navigation bar: pixel-font logo (name) on the left, page
+   anchor links + social icons on the right. Collapses into a hamburger
+   dropdown menu below the .nav-toggle breakpoint (see section 12).
    ------------------------------------------------------------------------- */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 40;
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 0.8rem;
-  background: rgba(1, 9, 1, 0.85);
-  border-bottom: 1px solid var(--line);
-  font-size: 1.1rem;
+nav{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:40;
+  background:rgba(1,9,1,0.9);
+  border-bottom:1px solid var(--line);
   backdrop-filter: blur(2px);
 }
-nav a {
-  color: var(--green-dim);
+
+.nav-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0.8rem 1.3rem;
+  position:relative;
 }
-nav a:hover {
-  color: var(--green);
-  text-decoration: none;
+
+/* pixel-font logo built from the site owner's initials, left side of nav */
+.logo{
+  font-family:'Press Start 2P', monospace;
+  font-size:0.85rem;
+  color:var(--green);
+  text-shadow: 0 0 4px var(--green), 0 0 10px rgba(51,255,51,0.35);
+  flex-shrink:0;
 }
+.logo:hover{ text-decoration:none; }
+.logo-accent{ color:var(--amber); }
+
+/* wraps nav links + social icons; becomes the collapsible dropdown on mobile */
+.nav-menu{
+  display:flex;
+  align-items:center;
+  gap:2rem;
+}
+
+.nav-links{ display:flex; gap:1.5rem; font-size:1.1rem; }
+.nav-links a{ color:var(--green-dim); }
+.nav-links a:hover{ color:var(--green); text-decoration:none; }
+
+/* GitHub / LinkedIn / Email icons, right side of nav (desktop) */
+.nav-social{ display:flex; align-items:center; gap:1rem; }
+.nav-social a{ color:var(--green-dim); display:flex; }
+.nav-social a:hover{ color:var(--amber); }
+.nav-social svg{ width:18px; height:18px; }
+
+/* hamburger button — hidden on desktop, shown under the breakpoint */
+.nav-toggle{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  width:32px;
+  height:32px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:4px;
+}
+.nav-toggle span{
+  width:100%;
+  height:2px;
+  background:var(--green);
+  display:block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+/* animates the three bars into an "X" when the menu is open */
+.nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2){ opacity:0; }
+.nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
 /* -------------------------------------------------------------------------
    5. SECTION SHELL
@@ -161,68 +174,50 @@ nav a:hover {
    reusable "terminal window" chrome (title bar + traffic-light dots)
    used to frame the About/Skills panels.
    ------------------------------------------------------------------------- */
-section {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5rem 1.5rem;
-  position: relative;
-  border-bottom: 1px dashed var(--line);
+section{
+  min-height:100vh;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:5rem 1.5rem;
+  position:relative;
+  border-bottom:1px dashed var(--line);
 }
-section:last-of-type {
-  border-bottom: none;
+section:last-of-type{ border-bottom:none; }
+
+.inner{ width:100%; max-width:1000px; margin:0 auto; }
+
+.term-window{
+  border:1px solid var(--line);
+  background:var(--bg-panel);
+  box-shadow: 0 0 0 1px rgba(51,255,51,0.05), 0 0 40px rgba(51,255,51,0.06) inset;
+  max-width:1000px;
+  margin:0 auto;
+}
+.term-bar{
+  display:flex; align-items:center; gap:8px;
+  padding:10px 14px;
+  border-bottom:1px solid var(--line);
+  font-family:'VT323', monospace;
+  font-size:16px;
+  color:var(--green-dim);
+  letter-spacing:1px;
+}
+.term-dot{ width:10px; height:10px; border-radius:50%; border:1px solid var(--green-dim); }
+.term-title{ margin-left:10px; opacity:0.8; }
+
+.prompt::before{
+  content:"$ ";
+  color:var(--amber);
 }
 
-.inner {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.term-window {
-  border: 1px solid var(--line);
-  background: var(--bg-panel);
-  box-shadow:
-    0 0 0 1px rgba(51, 255, 51, 0.05),
-    0 0 40px rgba(51, 255, 51, 0.06) inset;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-.term-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--line);
-  font-family: "VT323", monospace;
-  font-size: 16px;
-  color: var(--green-dim);
-  letter-spacing: 1px;
-}
-.term-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid var(--green-dim);
-}
-.term-title {
-  margin-left: 10px;
-  opacity: 0.8;
-}
-
-.prompt::before {
-  content: "$ ";
-  color: var(--amber);
-}
-
-.eyebrow {
-  font-family: "VT323", monospace;
-  font-size: 18px;
-  color: var(--green-dim);
-  margin-bottom: 1rem;
-  letter-spacing: 2px;
+.eyebrow{
+  font-family:'VT323', monospace;
+  font-size:18px;
+  color:var(--green-dim);
+  margin-bottom:1rem;
+  letter-spacing:2px;
 }
 
 /* -------------------------------------------------------------------------
@@ -230,93 +225,91 @@ section:last-of-type {
    Full-viewport intro with the animated boot log, big pixel heading with
    a blinking cursor, tagline, and a bobbing "scroll down" hint.
    ------------------------------------------------------------------------- */
-#hero {
+#hero{
   background:
-    radial-gradient(
-      ellipse at 50% 0%,
-      rgba(51, 255, 51, 0.06),
-      transparent 60%
-    ),
+    radial-gradient(ellipse at 50% 0%, rgba(51,255,51,0.06), transparent 60%),
     var(--bg);
 }
 
-.boot-log {
-  font-family: "VT323", monospace;
-  font-size: 16px;
-  color: var(--green-dim);
-  max-width: 640px;
-  margin: 0 auto 2rem;
-  min-height: 120px;
-  white-space: pre-wrap;
+.boot-log{
+  font-family:'VT323', monospace;
+  font-size:16px;
+  color:var(--green-dim);
+  max-width:640px;
+  margin:0 auto 2rem;
+  min-height:120px;
+  white-space:pre-wrap;
 }
-.boot-log .ok {
-  color: var(--green);
-} /* completed boot line gets brighter */
+.boot-log .ok{ color:var(--green); } /* completed boot line gets brighter */
 
-.hero-heading {
-  text-align: center;
-  font-size: clamp(1.4rem, 5vw, 3rem);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  letter-spacing: 1px;
+.hero-heading{
+  text-align:center;
+  font-size:clamp(1.4rem, 5vw, 3rem);
+  line-height:1.6;
+  margin-bottom:1.5rem;
+  letter-spacing:1px;
 }
-.hero-heading .cursor {
-  display: inline-block;
-  width: 0.6em;
-  background: var(--green);
+.hero-heading .cursor{
+  display:inline-block;
+  width:0.6em;
+  background:var(--green);
   animation: blink 1s steps(1) infinite;
 }
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
+@keyframes blink{ 50%{ opacity:0; } }
+
+.hero-tagline{
+  text-align:center;
+  font-size:1.4rem;
+  color:var(--amber);
+  max-width:600px;
+  margin:0 auto 2.5rem;
 }
 
-.hero-tagline {
-  text-align: center;
-  font-size: 1.4rem;
-  color: var(--amber);
-  max-width: 600px;
-  margin: 0 auto 2.5rem;
-}
-
-.scroll-hint {
-  text-align: center;
-  font-size: 1rem;
-  color: var(--green-dim);
+.scroll-hint{
+  text-align:center;
+  font-size:1rem;
+  color:var(--green-dim);
   animation: bob 2s ease-in-out infinite;
 }
-@keyframes bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(6px);
-  }
-}
+@keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
 
 /* -------------------------------------------------------------------------
    7. ABOUT SECTION
-   Bio copy plus a definition-list "spec sheet" (role / stack / focus /
-   status) styled like terminal key-value output.
+   Profile picture + bio copy, plus a definition-list "spec sheet"
+   (role / stack / focus / status) styled like terminal key-value output.
    ------------------------------------------------------------------------- */
-.about-grid {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 1rem 1.5rem;
-}
-.about-grid dt {
-  color: var(--green-dim);
-}
-.about-grid dd {
-  color: var(--green);
+.about-content{
+  display:flex;
+  gap:2rem;
+  align-items:flex-start;
+  flex-wrap:wrap;
 }
 
-.bio {
-  font-size: 1.3rem;
-  margin-top: 1.5rem;
-  max-width: 70ch;
+/* pixel-framed profile photo — swap img/profile.png for your own photo */
+.profile-pic{
+  width:140px;
+  height:140px;
+  object-fit:cover;
+  flex-shrink:0;
+  border:3px solid var(--green);
+  box-shadow: 0 0 4px var(--green), 0 0 18px rgba(51,255,51,0.35);
+  image-rendering:pixelated; /* keeps the placeholder crisp; safe to remove for real photos */
+}
+
+.about-text{ flex:1; min-width:240px; }
+
+.about-grid{
+  display:grid;
+  grid-template-columns: 90px 1fr;
+  gap:1rem 1.5rem;
+}
+.about-grid dt{ color:var(--green-dim); }
+.about-grid dd{ color:var(--green); }
+
+.bio{
+  font-size:1.3rem;
+  margin-top:1.5rem;
+  max-width:70ch;
 }
 
 /* -------------------------------------------------------------------------
@@ -324,41 +317,36 @@ section:last-of-type {
    Responsive grid of skill rows, each with an animated fill bar driven
    by a --pct custom property set inline per skill.
    ------------------------------------------------------------------------- */
-.skills-list {
-  list-style: none;
-  display: grid;
+.skills-list{
+  list-style:none;
+  display:grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem 2rem;
+  gap:1rem 2rem;
 }
-.skills-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.3rem;
-  border-bottom: 1px dotted var(--line);
-  padding-bottom: 6px;
+.skills-list li{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:1.3rem;
+  border-bottom:1px dotted var(--line);
+  padding-bottom:6px;
 }
-.bar {
-  width: 140px;
-  height: 10px;
-  border: 1px solid var(--green-dim);
-  position: relative;
-  flex-shrink: 0;
-  margin-left: 1rem;
+.bar{
+  width:140px;
+  height:10px;
+  border:1px solid var(--green-dim);
+  position:relative;
+  flex-shrink:0;
+  margin-left:1rem;
 }
-.bar span {
-  position: absolute;
-  inset: 0;
-  background: var(--green);
-  box-shadow: 0 0 6px var(--green);
-  width: var(--pct);
+.bar span{
+  position:absolute; inset:0;
+  background:var(--green);
+  box-shadow:0 0 6px var(--green);
+  width:var(--pct);
   animation: fillbar 1.4s ease-out both;
 }
-@keyframes fillbar {
-  from {
-    width: 0;
-  }
-}
+@keyframes fillbar{ from{ width:0; } }
 
 /* -------------------------------------------------------------------------
    9. PROJECTS SECTION
@@ -366,205 +354,139 @@ section:last-of-type {
    "View on GitHub" link with an inline SVG GitHub mark. Cards lift and
    glow on hover.
    ------------------------------------------------------------------------- */
-.projects-grid {
-  display: grid;
+.projects-grid{
+  display:grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
+  gap:1.5rem;
 }
-.card {
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(51, 255, 51, 0.03), transparent 40%);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  transition:
-    transform 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+.card{
+  border:1px solid var(--line);
+  background: linear-gradient(180deg, rgba(51,255,51,0.03), transparent 40%);
+  padding:1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.8rem;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.card:hover {
-  transform: translateY(-4px);
-  border-color: var(--green);
-  box-shadow: 0 0 18px rgba(51, 255, 51, 0.25);
+.card:hover{
+  transform:translateY(-4px);
+  border-color:var(--green);
+  box-shadow:0 0 18px rgba(51,255,51,0.25);
 }
-.card-title {
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.85rem;
-  color: var(--green-glow);
+.card-title{
+  font-family:'Press Start 2P', monospace;
+  font-size:0.85rem;
+  color:var(--green-glow);
 }
-.card-desc {
-  font-size: 1.2rem;
-  flex-grow: 1;
-  color: #a9e6a9;
+.card-desc{ font-size:1.2rem; flex-grow:1; color:#a9e6a9; }
+.card-tags{
+  font-size:1rem;
+  color:var(--green-dim);
 }
-.card-tags {
-  font-size: 1rem;
-  color: var(--green-dim);
+.gh-link{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:1.1rem;
+  color:var(--amber);
+  border:1px solid var(--amber);
+  padding:6px 10px;
+  width:fit-content;
+  margin-top:0.5rem;
 }
-.gh-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.1rem;
-  color: var(--amber);
-  border: 1px solid var(--amber);
-  padding: 6px 10px;
-  width: fit-content;
-  margin-top: 0.5rem;
-}
-.gh-link:hover {
-  background: var(--amber);
-  color: #000;
-  text-decoration: none;
-}
-.gh-link svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-}
+.gh-link:hover{ background:var(--amber); color:#000; text-decoration:none; }
+.gh-link svg{ width:16px; height:16px; fill:currentColor; }
 
 /* -------------------------------------------------------------------------
    10. CONTACT SECTION
    Centered call-to-action with a mailto button and social links,
    styled as a terminal "send message" script.
    ------------------------------------------------------------------------- */
-.contact-box {
-  text-align: center;
+.contact-box{ text-align:center; }
+.email-link{
+  display:inline-block;
+  font-family:'Press Start 2P', monospace;
+  font-size:1.1rem;
+  padding:1rem 1.5rem;
+  border:1px solid var(--green);
+  margin-top:1.5rem;
+  box-shadow:0 0 14px rgba(51,255,51,0.2);
 }
-.email-link {
-  display: inline-block;
-  font-family: "Press Start 2P", monospace;
-  font-size: 1.1rem;
-  padding: 1rem 1.5rem;
-  border: 1px solid var(--green);
-  margin-top: 1.5rem;
-  box-shadow: 0 0 14px rgba(51, 255, 51, 0.2);
-}
-.email-link:hover {
-  background: var(--green);
-  color: #000;
-  text-decoration: none;
-}
+.email-link:hover{ background:var(--green); color:#000; text-decoration:none; }
 
-.socials {
-  margin-top: 2rem;
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  font-size: 1.2rem;
+/* Feather-icon social links (GitHub / LinkedIn / Email) */
+.socials{
+  margin-top:2rem;
+  display:flex;
+  gap:1.5rem;
+  justify-content:center;
+}
+.social-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:52px;
+  height:52px;
+  border:1px solid var(--green-dim);
+  color:var(--green);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+.social-icon svg{ width:22px; height:22px; }
+.social-icon:hover{
+  color:var(--amber);
+  border-color:var(--amber);
+  box-shadow:0 0 14px rgba(255,204,0,0.35);
+  transform:translateY(-3px);
+  text-decoration:none;
 }
 
 /* -------------------------------------------------------------------------
    11. FOOTER
    ------------------------------------------------------------------------- */
-footer {
-  text-align: center;
-  padding: 2rem 1rem 3rem;
-  font-size: 1rem;
-  color: var(--green-dim);
-}
-
-/* ---------- Container ---------- */
-.name-wrap {
-  background: #010901;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-/* preview-only backdrop, remove this block when pasting into your site */
-body {
-  background: #010901;
-  padding: 3rem 1rem;
-}
-
-/* preview-only backdrop, remove this block when pasting into your site */
-body {
-  background: #010901;
-  padding: 3rem 1rem;
-}
-
-/* ---------- Pixel name (left-to-right, cyberpunk bounce) ---------- */
-.pixel-name {
-  font-family: "Press Start 2P", monospace;
-  display: flex;
-  gap: 0.1em;
-  font-size: clamp(0.6rem, 2.2vw, 1rem);
-}
-
-.pixel-name span {
-  --step: 0.07s; /* delay between each letter starting its bounce */
-  --i: 0; /* set per-letter below via inline style */
-  color: #33ff33;
-  text-shadow:
-    0 0 3px #33ff33,
-    0 0 8px rgba(51, 255, 51, 0.4);
-  display: inline-block;
-  animation: bounce 1.8s ease-in-out infinite;
-  /* POSITIVE delay, scaled by letter position (--i), so letter 0 (leftmost)
-       bounces first and each following letter bounces a little later —
-       the wave reads left to right. Because every letter shares the same
-       duration, this offset repeats identically every loop, no drift. */
-  animation-delay: calc(var(--i) * var(--step));
-}
-
-/* small, snappy pop — mostly rest, short sharp motion, cyberpunk color flash */
-@keyframes bounce {
-  0% {
-    transform: translateY(0) scale(1);
-    color: #33ff33;
-    text-shadow:
-      0 0 3px #33ff33,
-      0 0 8px rgba(51, 255, 51, 0.4);
-  }
-  4% {
-    transform: translateY(-6px) scale(1.1);
-    color: #002fff; /* electric cyan flash */
-    text-shadow:
-      0 0 6px #002fff,
-      0 0 14px #ff00e6,
-      0 0 22px rgba(255, 0, 230, 0.5);
-  } /* cyan + magenta glow */
-  8% {
-    transform: translateY(1px) scale(0.95);
-    color: #33ff33;
-    text-shadow:
-      0 0 3px #33ff33,
-      0 0 8px rgba(51, 255, 51, 0.4);
-  }
-  12% {
-    transform: translateY(0) scale(1);
-    color: #33ff33;
-    text-shadow:
-      0 0 3px #33ff33,
-      0 0 8px rgba(51, 255, 51, 0.4);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    color: #33ff33;
-    text-shadow:
-      0 0 3px #33ff33,
-      0 0 8px rgba(51, 255, 51, 0.4);
-  } /* rest until next loop */
+footer{
+  text-align:center;
+  padding:2rem 1rem 3rem;
+  font-size:1rem;
+  color:var(--green-dim);
 }
 
 /* -------------------------------------------------------------------------
    12. RESPONSIVE TWEAKS
-   Smaller base font, single-column About grid, and tighter nav spacing
-   on narrow viewports.
+   Smaller base font, single-column About grid, tighter nav spacing, and
+   the nav collapsing into a hamburger dropdown on narrow viewports.
    ------------------------------------------------------------------------- */
-@media (max-width: 600px) {
-  body {
-    font-size: 19px;
+@media (max-width:700px){
+  .nav-toggle{ display:flex; } /* show hamburger button */
+
+  .nav-menu{
+    position:absolute;
+    top:100%; left:0; right:0;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    max-height:0;
+    overflow:hidden;
+    background:rgba(1,9,1,0.97);
+    border-bottom:1px solid var(--line);
+    transition: max-height 0.25s ease;
   }
-  .about-grid {
-    grid-template-columns: 1fr;
+  .nav-menu.open{ max-height:320px; } /* revealed when JS toggles .open */
+
+  .nav-links{
+    flex-direction:column;
+    gap:0;
+    width:100%;
   }
-  nav {
-    font-size: 0.9rem;
-    gap: 0.8rem;
+  .nav-links a{
+    padding:0.9rem 1.3rem;
+    border-bottom:1px dotted var(--line);
   }
+
+  .nav-social{
+    padding:1rem 1.3rem;
+    gap:1.4rem;
+  }
+}
+
+@media (max-width:600px){
+  body{ font-size:19px; }
+  .about-grid{ grid-template-columns: 1fr; }
 }
